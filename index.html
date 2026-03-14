@@ -12,16 +12,12 @@
   <h1 id="logoTitle" style="cursor:pointer;" title="回主頁">Mood Garden 🌿</h1>
 </header>
 
-
-
-
-  <!-- ============== HOME ============== -->
   <section id="pageHome" class="page">
     <div class="panel hero">
       <div class="heroText">
         <h2>此刻的你，正在經歷什麼？</h2>
         <p class="muted">
-          這裡不是要你立刻變好，而是陪你走完一次「冷靜 → 理解 → 往前」。
+          這裡不是要你立刻變好，而是陪你走完一次「冷靜 → 理解 → 陪伴」。
         </p>
         <div class="btnRow">
           <button id="startFlowBtn" class="primary">好好面對這個情緒</button>
@@ -29,9 +25,6 @@
         </div>
       </div>
     </div>
-
-
-
 
     <div class="panel">
       <h2>最近一次的情緒形貌</h2>
@@ -45,9 +38,6 @@
       </div>
     </div>
 
-
-
-
     <div class="panel">
       <h2>My Mood Gallery</h2>
       <p class="muted">每一次紀錄，都是你陪自己走過的證明</p>
@@ -55,19 +45,10 @@
     </div>
   </section>
 
-
-
-
-  <!-- ============== CALM ============== -->
   <section id="pageCalm" class="page hidden">
     <div class="panel">
       <h2>第一階段｜先讓自己慢下來</h2>
-      <p class="muted">
-        在理解情緒之前，我們先讓身體回到平穩。
-      </p>
-
-
-
+      <p class="muted">在理解情緒之前，我們先讓身體回到平穩。</p>
 
       <div class="calmCard">
         <div class="breathWrap">
@@ -77,51 +58,28 @@
             <div id="breathCount" class="breathCount">—</div>
           </div>
         </div>
-
-<div class="btnRow">
- <button id="startBreathBtn" class="primary">呼吸引導（約 1分鐘 ）</button>
-</div>
+        <div class="btnRow">
+         <button id="startBreathBtn" class="primary">呼吸引導（約 1分鐘 ）</button>
+        </div>
         
-
-
-
-
         <div class="quoteBox">
           <div class="quoteTitle">與情緒拉開一點距離</div>
-          <p class="quoteText">
-            請將一手放胸口，一手放腹部。謝謝此刻仍然選擇勇敢面對的自己🌿。
-          </p>
-          
-           
+          <p class="quoteText">請將一手放胸口，一手放腹部。謝謝此刻仍然選擇勇敢面對的自己🌿。</p>
         </div>
-
-
-
 
         <div class="btnRow">
           <button id="toUnderstandBtn" class="primary">我準備好理解它</button>
-          
           <button id="backHomeFromCalm" class="ghost">回主頁</button>
-          
         </div>
       </div>
     </div>
   </section>
 
-
-
-
-  <!-- ============== UNDERSTAND ============== -->
- <section id="pageUnderstand" class="page hidden">
+  <section id="pageUnderstand" class="page hidden">
     <div class="panel">
       <h2>第二階段 (1/2) ｜ 視覺化：看見情緒背後的訊息 🎨</h2>
-      <p class="muted">
-        給此刻的感受一個形貌，用emoji貼紙將它拼貼出來~
-      </p> 
+      <p class="muted">給此刻的感受一個形貌，用emoji貼紙將它拼貼出來~</p> 
   
-
-
-
      <div class="row-group">
       <label class="section-label" for="emotionNameInput">情緒命名</label>
       <input type="text" id="emotionNameInput" placeholder="例：夜晚中貼著 OK 繃的小熊布偶..." />
@@ -165,8 +123,6 @@
       <button type="button" id="deleteStickerBtn" class="danger">刪除</button>
     </div>
 
-   <!-- /range=滑桿/!-->
-
     <div class="row-group">
       <label class="section-label">情緒標記色</label>
       <div class="color-picker-box">
@@ -183,105 +139,62 @@
 
     <div class="btnRow" style="margin-top: 24px;">
       <button id="toUnderstand2Btn" class="primary">下一步：梳理感受</button>
-      <button id="backHomeFromUnderstand" class="ghost">回主頁</button>
+      <button id="backHomeFromUnderstand" class="ghost">🌿 先記錄到這</button>
     </div>
   </div>
 </section>
 
-
-
   <section id="pageUnderstand2" class="page hidden">
     <div class="panel">
      <div id="floatingEmoji1" class="floating-companion"></div>
-      <h2>第二階段 (2/2) ｜ 深對話：聽見情緒的聲音 ✍️</h2>
+      <h2>第三階段 ｜ 深對話與陪伴 ✍️</h2>
       
       <div style="margin-bottom: 20px;">
-        
-
-      <p class="muted">
-        我們無法改變事實，但可以選擇回應的方式！
-      </p>
+      <p class="muted">我們無法改變事實，但可以選擇承接自己的方式。</p>
 
       <div class="logic-box fact-bg">
         <label style="font-size: 20px; margin-bottom: 4px; color: var(--text); font-weight: 800;">事實與原因</label>
         <label for="eventInput" style="margin-top: 12px;">🧾 紀錄事件：</label>
-        <textarea id="eventInput" rows="3" placeholder="發生了什麼？當下的感受是什麼？。"></textarea>
+        <textarea id="eventInput" rows="3" placeholder="發生了什麼？當下的感受是什麼？"></textarea>
 
         <label for="qWhy" style="margin-top: 16px;">🧠 釐清觸發點：</label>
-       <textarea id="qWhy" rows="4"
-          placeholder="這件事為什麼會觸動我？它碰到了我在意的什麼？是否正在保護某個重要的我？"></textarea>
+       <textarea id="qWhy" rows="4" placeholder="這件事為什麼會觸動我？它碰到了我在意的什麼？是否正在保護某個重要的我？"></textarea>
       </div>
 
       <div style="text-align: center; margin: 12px 0; color: var(--muted); font-size: 20px;">⬇️</div>
 
       <div class="logic-box choice-bg">
-       <label style="font-size: 20px; margin-bottom: 4px; color: var(--text); font-weight: 800;">轉念與行動</label>
-      <textarea id="choiceInput" rows="3" placeholder="我選擇如何承接這份事實？以什麼心態面對？我能做的小行動是什麼？"></textarea>
+       <label style="font-size: 20px; margin-bottom: 4px; color: var(--text); font-weight: 800;">給自己的話</label>
+       <label for="selfTalkInput" style="margin-top: 12px;">🌿 我想對自己說：</label>
+       <textarea id="selfTalkInput" rows="3" placeholder="寫下一句溫柔的話，送給現在的自己..."></textarea>
+      </div>
+
+      <div class="block">
+        <div class="blockTitle">✨ 靜心冥想：安頓此刻的自己</div>
+        <p class="muted">如果想慢一點也沒關係。選一段引導，讓心回到當下。</p>
+        <div class="linkGrid">
+          <a class="ytLink" target="_blank" href="https://www.youtube.com/results?search_query=釋放焦慮+冥想">🧘 釋放焦慮</a>
+          <a class="ytLink" target="_blank" href="https://www.youtube.com/results?search_query=釋懷與放下+冥想">🍃 釋懷與放下</a>
+          <a class="ytLink" target="_blank" href="https://www.youtube.com/results?search_query=愛自己+冥想">💖 愛自己</a>
+        </div>
+      </div>
+
+      <div class="logic-box fact-bg" style="border: 2px dashed var(--line); text-align: center; margin-top: 16px;">
+        <div class="blockTitle">💡 回到現實：抽一份送給自己的禮物吧！</div>
+        <div id="randomActionCard" class="magic-card">
+          <p id="randomActionText" style="margin: 0; font-weight: 800; font-size: 16px; color: var(--primary); line-height: 1.6;"></p>
+        </div>
+        <button id="drawCardBtn" class="ghost" style="width: 100%; color: var(--primary); border-color: var(--primary);">✨ 抽一張生活靈感卡</button>
       </div>
 
       <div class="btnRow" style="margin-top: 24px;">
-        <button id="toMoveOnBtn" class="primary">我想往前走</button>
+        <button id="finishBtn" class="primary">完成，種入花園</button>
         <button id="backToUnderstand1Btn" class="ghost">回上一頁拼貼</button>
-        <button id="backHomeFromUnderstand2" class="ghost">回主頁</button>
+        <button id="backHomeFromUnderstand2" class="ghost">🌿 先記錄到這</button>
       </div>
     </div>
   </section>
 
-
-  <!-- ============== MOVE ON ============== -->
-  <section id="pageMoveOn" class="page hidden">
-    <div class="panel">
-     <div id="floatingEmoji2" class="floating-companion"></div>
-      <h2>第三階段｜將情緒化為養分</h2>
-      <p class="muted">
-        安頓好心靈，帶著新的力量回到生活。
-      </p>
-
-<div class="logic-box choice-bg">
-      
-      <div class="blockTitle" style="margin-bottom: 8px;">📝 心靈的收穫</div>
-      <textarea id="growthText" rows="2" placeholder="經歷之後，我更理解自己：＿＿＿"></textarea>
-      
-      <div class="blockTitle" style="margin-top: 16px; margin-bottom: 8px;">🚀 具體的行動計畫</div>
-      <textarea id="actionText" rows="2" placeholder="我願意做的一小步是：＿＿＿"></textarea>
-      
-    </div>
-
-    <div class="block">
-      <div class="blockTitle">✨ 靜心冥想：安頓此刻的自己</div>
-      <p class="muted">如果想慢一點也沒關係。選一段引導，讓心回到當下。</p>
-      <div class="linkGrid">
-        <a class="ytLink" target="_blank" href="https://www.youtube.com/results?search_query=釋放焦慮+冥想">🧘 釋放焦慮</a>
-        <a class="ytLink" target="_blank" href="https://www.youtube.com/results?search_query=釋懷與放下+冥想">🍃 釋懷與放下</a>
-        <a class="ytLink" target="_blank" href="https://www.youtube.com/results?search_query=愛自己+冥想">💖 愛自己</a>
-      </div>
-    </div>
-
-    <div class="logic-box fact-bg" style="border: 2px dashed var(--line); text-align: center;">
-      
-      <div class="blockTitle">💡 回到現實：抽一份送給自己的禮物吧！</div>
-      
-     <div id="randomActionCard" class="magic-card">
-        <p id="randomActionText" style="margin: 0; font-weight: 800; font-size: 16px; color: var(--primary); line-height: 1.6;"></p>
-      </div>
-      
-      <button id="drawCardBtn" class="ghost" style="width: 100%; color: var(--primary); border-color: var(--primary);">✨ 抽一張生活靈感卡</button>
-    </div>
-
-    <div class="btnRow">
-      <button id="finishBtn" class="primary">完成，種入花園</button>
-      <button id="backToUnderstandBtn" class="ghost">回上一頁</button>
-    </div>
-  </div>
-</section>
-
-
-      
-
-
-
-
-  <!-- ============== MODAL ============== -->
   <div id="modal" class="modal hidden">
     <div class="modalCard">
       <button id="closeModal" class="closeBtn">×</button>
@@ -289,13 +202,6 @@
     </div>
   </div>
 
-
-<script src="https://unpkg.com/drag-drop-touch"></script>
-  
-  <script src="script.js"></script>
-</body>
-
   <script src="script.js"></script>
 </body>
 </html>
-

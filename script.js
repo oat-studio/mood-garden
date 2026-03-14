@@ -594,10 +594,4 @@ document.addEventListener("DOMContentLoaded", () => {
   Render.canvas();
 });
 
-/* --- 📱 手機防滑動終極補丁 --- */
-document.addEventListener('touchmove', function(e) {
-  // 檢查手指摸到的地方，是不是畫布 (.rect-canvas) 或貼紙 (.sticker)
-  if (e.target.closest('.rect-canvas') || e.target.closest('.sticker')) {
-    e.preventDefault(); // 🛑 魔法關鍵：強制阻止手機的預設捲動行為！
-  }
-}, { passive: false }); // 必須加上這個，瀏覽器才會允許我們阻止滑動
+

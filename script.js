@@ -35,7 +35,6 @@ const State = {
   // 擴充性：愛的五種語言 100 招卡片資料庫
   // ==========================================
   loveLanguageCards: [
-    // 💌 肯定的言詞 (Words of Affirmation)：透過正向的語言來肯定與鼓勵自己。
     "💌 肯定的言詞：寫下三個你今天值得被稱讚的地方。",
     "💌 肯定的言詞：對著鏡子微笑，並說一聲「你辛苦了」。",
     "💌 肯定的言詞：原諒自己今天犯下的一個小失誤。",
@@ -57,7 +56,6 @@ const State = {
     "💌 肯定的言詞：當感到焦慮時，對自己說：「這只是一個情緒，它會過去的。」",
     "💌 肯定的言詞：對自己說出你現在最想從別人口中聽到的那句安慰。",
 
-    // ⏰ 精心的時刻 (Quality Time)：給自己不被打擾、全心全意專注的陪伴時光。
     "⏰ 精心的時刻：放下手機 15 分鐘，專心發呆或深呼吸。",
     "⏰ 精心的時刻：為自己泡一杯熱茶或咖啡，專注品嚐它的味道。",
     "⏰ 精心的時刻：帶自己去一間一直想去的咖啡廳，享受獨處時光。",
@@ -79,7 +77,6 @@ const State = {
     "⏰ 精心的時刻：點起一顆喜歡的香氛蠟燭，靜靜看著燭火跳動。",
     "⏰ 精心的時刻：安排一個專屬於自己的「週末微旅行」或散步路線。",
 
-    // 🎁 接受禮物 (Receiving Gifts)：給自己實質的獎勵，表達對自己的重視。
     "🎁 接受禮物：買一份平常捨不得吃的高級甜點犒賞自己。",
     "🎁 接受禮物：下班路上，為自己買一束漂亮的花。",
     "🎁 接受禮物：買一本一直想看的新書送給自己。",
@@ -101,7 +98,6 @@ const State = {
     "🎁 接受禮物：訂閱一個能帶來快樂的服務（例如：串流平台）。",
     "🎁 接受禮物：把零錢存進一個特別的存錢筒，作為未來的「夢想基金」。",
 
-    // 🛠️ 服務的行動 (Acts of Service)：透過實際的行動來照顧自己的生活與健康。
     "🛠️ 服務的行動：把一直沒整理的書桌或小角落清乾淨。",
     "🛠️ 服務的行動：把明天要穿的衣服和包包提前準備好。",
     "🛠️ 服務的行動：預約那個拖了很久的牙醫或健康檢查。",
@@ -123,7 +119,6 @@ const State = {
     "🛠️ 服務的行動：設定好睡眠模式，讓手機在晚上自動靜音。",
     "🛠️ 服務的行動：幫家裡的植物澆水，修剪枯萎的葉片。",
 
-    // 👋 身體的接觸 (Physical Touch)：透過感官與肢體的放鬆，讓身體感到安全與舒適。
     "👋 身體的接觸：洗一個舒服的熱水澡，感受水流放鬆肌肉。",
     "👋 身體的接觸：睡前用乳液輕輕按摩自己緊繃的小腿和肩膀。",
     "👋 身體的接觸：換上衣櫃裡最柔軟、最親膚的那套睡衣。",
@@ -178,16 +173,14 @@ const State = {
 // 2. Render Engine (統一渲染引擎)
 // ==========================================
 const Render = {
-  // ⭐️ 核心渲染邏輯：將精靈、花園、預覽圖統一，不再寫重複的 HTML
   createMoodGraphic(baseEmoji, stickers, color, sizePx = 120) {
     const safeBase = baseEmoji || "🧸";
-    // 根據容器大小計算縮放比例 (基準值為畫布高度 200px)
     const scale = sizePx / 200; 
 
     const stickersHTML = stickers.map(s => {
-      const left = s.x * 100; // 轉換為百分比
+      const left = s.x * 100;
       const top = s.y * 100;
-      const scaledSize = s.size * scale; // 貼紙等比縮放
+      const scaledSize = s.size * scale;
       return `<div style="position:absolute; left:${left}%; top:${top}%; transform:translate(-50%, -50%); font-size:${scaledSize}px; line-height:1; user-select:none;">${s.emoji}</div>`;
     }).join("");
 
@@ -206,20 +199,14 @@ const Render = {
     `;
   },
 
-  // 渲染大畫布 (500x200 長方形)
   canvas() {
     const canvasEl = document.getElementById("canvas");
     const baseEl = document.getElementById("baseEmoji");
     if (!canvasEl || !baseEl) return;
 
-    const currentW = canvasEl.offsetWidth || 500;
-    const currentH = canvasEl.offsetHeight || 200;
-
     baseEl.textContent = document.getElementById("baseEmojiInput")?.value.trim() || "";
-    // 依據標記色更新畫布光暈
     canvasEl.style.setProperty('--current-color', document.getElementById("colorPicker")?.value || "#A67C74");
 
-    // 清除舊貼紙
     [...canvasEl.querySelectorAll(".sticker")].forEach(el => el.remove());
 
     State.draft.stickers.forEach(s => {
@@ -227,19 +214,23 @@ const Render = {
       el.className = "sticker" + (s.id === State.selectedStickerId ? " selected" : "");
       el.textContent = s.emoji;
       el.style.fontSize = s.size + "px";
-      el.style.left = (s.x * 100) + "%"; // ⭐️ 使用百分比，確保 RWD 縮放不跑位
+      el.style.left = (s.x * 100) + "%";
       el.style.top = (s.y * 100) + "%";
 
-      el.addEventListener("mousedown", (e) => {
-        e.preventDefault();
+      // 🌟 關鍵魔法 1：同時綁定「滑鼠按下」與「手指摸到」事件
+      const startInteraction = (e) => {
+        e.preventDefault(); // 阻止系統預設行為（例如拷貝文字）
         State.selectedStickerId = s.id;
         Render.canvas();
         Logic.startDrag(e, s.id);
-      });
+      };
+      
+      el.addEventListener("mousedown", startInteraction);
+      el.addEventListener("touchstart", startInteraction, { passive: false }); // 手機專用！
+
       canvasEl.appendChild(el);
     });
 
-    // 同步滑桿
     const slider = document.getElementById("sizeSlider");
     if (slider) {
       const selected = State.draft.stickers.find(x => x.id === State.selectedStickerId);
@@ -247,7 +238,6 @@ const Render = {
     }
   },
 
-  // 渲染右上角陪伴精靈
   companions() {
     const companions = document.querySelectorAll(".floating-companion");
     const html = this.createMoodGraphic(State.draft.baseEmoji, State.draft.stickers, State.draft.color, 80);
@@ -258,11 +248,10 @@ const Render = {
     });
   },
 
-  // 渲染首頁近期預覽
   homePreview() {
     const latest = State.getGarden()[0];
     const iconEl = document.getElementById("latestIcon");
-    const previewRow = document.querySelector(".previewRow"); // 🌟 抓取整張預覽卡片
+    const previewRow = document.querySelector(".previewRow");
     if (!iconEl) return;
 
     if (!latest) {
@@ -271,7 +260,6 @@ const Render = {
       document.getElementById("latestTitle").textContent = "你可以從第一階段開始，慢慢來。";
       document.getElementById("latestDate").textContent = "";
       
-      // 如果還沒紀錄，拔掉點擊功能
       if (previewRow) {
         previewRow.onclick = null;
         previewRow.style.cursor = "default";
@@ -284,14 +272,12 @@ const Render = {
     document.getElementById("latestDate").textContent = latest.date || "";
     document.getElementById("latestTitle").textContent = latest.eventText?.slice(0, 18) + "…" || "";
 
-    // 🌟 核心新增：綁定點擊事件，讓它呼叫原本寫好的 openModal！
     if (previewRow) {
-      previewRow.style.cursor = "pointer"; // 讓滑鼠變成手指
-      previewRow.onclick = () => Logic.openModal(latest); // 點擊卡片彈出回顧視窗
+      previewRow.style.cursor = "pointer";
+      previewRow.onclick = () => Logic.openModal(latest);
     }
   },
 
-  // 渲染隨機花園
   gardenList() {
     const garden = State.getGarden();
     const list = document.getElementById("gardenList");
@@ -305,7 +291,6 @@ const Render = {
       plant.style.position = "absolute";
       plant.style.cursor = "pointer";
 
-      // 防碰撞邏輯
       let randomX, randomY, overlapping = true, attempts = 0;
       while (overlapping && attempts < 50) {
         randomX = Math.floor(Math.random() * 80) + 10;
@@ -326,7 +311,6 @@ const Render = {
     });
   },
 
-  // 切換頁面
   page(pageId) {
     ["pageHome", "pageCalm", "pageUnderstand", "pageUnderstand2", "pageMoveOn"].forEach(id => {
       document.getElementById(id)?.classList.add("hidden");
@@ -341,7 +325,7 @@ const Render = {
 // 3. Logic (業務邏輯與控制器)
 // ==========================================
 const Logic = {
-  // 拖拽邏輯
+  // 拖拽邏輯 (🌟 關鍵魔法 2：手機/電腦座標完美融合！)
   startDrag(e, id) {
     const canvas = document.getElementById("canvas");
     const rect = canvas.getBoundingClientRect();
@@ -349,19 +333,31 @@ const Logic = {
     if (!s) return;
 
     const onMove = (ev) => {
-      s.x = Utils.clamp((ev.clientX - rect.left) / rect.width, 0, 1);
-      s.y = Utils.clamp((ev.clientY - rect.top) / rect.height, 0, 1);
+      ev.preventDefault(); // 防止拖曳時網頁跟著上下捲動
+      
+      // 判斷是手機觸控還是滑鼠，並抓取正確座標
+      const clientX = ev.touches ? ev.touches[0].clientX : ev.clientX;
+      const clientY = ev.touches ? ev.touches[0].clientY : ev.clientY;
+
+      s.x = Utils.clamp((clientX - rect.left) / rect.width, 0, 1);
+      s.y = Utils.clamp((clientY - rect.top) / rect.height, 0, 1);
       Render.canvas();
     };
+
     const onUp = () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseup", onUp);
+      window.removeEventListener("touchmove", onMove);
+      window.removeEventListener("touchend", onUp);
     };
+
+    // 同時綁定滑鼠與手機的移動/放開事件
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onUp);
+    window.addEventListener("touchmove", onMove, { passive: false });
+    window.addEventListener("touchend", onUp);
   },
 
-  // 新增貼紙
   addSticker() {
     const input = document.getElementById("customStickerInput");
     if (!input.value.trim()) return;
@@ -374,7 +370,6 @@ const Logic = {
     Render.canvas();
   },
 
-  // 刪除選中貼紙
   deleteSticker() {
     if (!State.selectedStickerId) return;
     State.draft.stickers = State.draft.stickers.filter(s => s.id !== State.selectedStickerId);
@@ -382,7 +377,6 @@ const Logic = {
     Render.canvas();
   },
 
-  // 抽卡功能
   drawCard() {
     const cardDiv = document.getElementById("randomActionCard");
     const textP = document.getElementById("randomActionText");
@@ -398,8 +392,6 @@ const Logic = {
     }, 50);
   },
 
-  // 呼吸引導
-  breathTimer: null,
   startBreath() {
     if (this.breathTimer) clearInterval(this.breathTimer);
     const label = document.getElementById("breathLabel");
@@ -441,17 +433,15 @@ const Logic = {
     }, 1000);
   },
 
-  // 開啟詳細記錄 Modal
   openModal(item) {
     const modal = document.getElementById("modal");
     const content = document.getElementById("modalContent");
     const color = item.color || "#A67C74";
 
-    // 🌟 核心修正：動態改變 Modal 卡片的左側邊框顏色！
     const modalCard = document.querySelector(".modalCard");
     if (modalCard) {
       modalCard.style.borderLeftColor = color;
-      modalCard.style.borderLeftWidth = "8px"; // 確保邊框夠粗，視覺更明顯
+      modalCard.style.borderLeftWidth = "8px"; 
       modalCard.style.borderLeftStyle = "solid";
     }
 
@@ -487,7 +477,6 @@ const Logic = {
     modal.classList.remove("hidden");
   },
 
-  // 最終存檔
   finishAndSave() {
     State.collectDraftFromDOM();
     if (!State.draft.emotionName) return alert("請先幫情緒取個名字喔！🌿"), Render.page("pageUnderstand");
@@ -506,12 +495,10 @@ const Logic = {
 // ==========================================
 const Events = {
   init() {
-    // ---- 導覽按鈕 ----
     document.getElementById("startFlowBtn")?.addEventListener("click", () => Render.page("pageCalm"));
     document.getElementById("quickAddBtn")?.addEventListener("click", () => Render.page("pageUnderstand"));
     document.getElementById("logoTitle")?.addEventListener("click", () => Render.page("pageHome"));
     
-    // 返回按鈕
     ["backHomeFromCalm", "backHomeFromUnderstand", "backHomeFromUnderstand2"].forEach(id => {
       document.getElementById(id)?.addEventListener("click", () => {
         State.collectDraftFromDOM();
@@ -521,7 +508,6 @@ const Events = {
     document.getElementById("backToUnderstand1Btn")?.addEventListener("click", () => Render.page("pageUnderstand"));
     document.getElementById("backToUnderstandBtn")?.addEventListener("click", () => Render.page("pageUnderstand2"));
 
-    // ---- 階段推進防呆 ----
     document.getElementById("toUnderstandBtn")?.addEventListener("click", () => Render.page("pageUnderstand"));
     
     document.getElementById("toUnderstand2Btn")?.addEventListener("click", () => {
@@ -541,23 +527,19 @@ const Events = {
 
     document.getElementById("finishBtn")?.addEventListener("click", () => Logic.finishAndSave());
 
-    // ---- 功能按鈕 ----
     document.getElementById("startBreathBtn")?.addEventListener("click", () => Logic.startBreath());
     document.getElementById("addStickerToPaletteBtn")?.addEventListener("click", () => Logic.addSticker());
     document.getElementById("deleteStickerBtn")?.addEventListener("click", () => Logic.deleteSticker());
     document.getElementById("drawCardBtn")?.addEventListener("click", () => Logic.drawCard());
     
-    // 即時更新畫布主體與顏色
     document.getElementById("baseEmojiInput")?.addEventListener("input", () => { State.collectDraftFromDOM(); Render.canvas(); });
     document.getElementById("colorPicker")?.addEventListener("input", () => { State.collectDraftFromDOM(); Render.canvas(); });
     
-    // 貼紙大小滑桿
     document.getElementById("sizeSlider")?.addEventListener("input", (e) => {
       const s = State.draft.stickers.find(x => x.id === State.selectedStickerId);
       if (s) { s.size = Number(e.target.value); Render.canvas(); }
     });
 
-    // 元素庫拖拽支援
     document.querySelectorAll('.paletteItem').forEach(item => {
       item.addEventListener('dragstart', (e) => e.dataTransfer.setData('text/plain', e.target.dataset.emoji));
     });
@@ -578,7 +560,6 @@ const Events = {
       }
     });
 
-    // Modal 關閉
     document.getElementById("closeModal")?.addEventListener("click", () => document.getElementById("modal").classList.add("hidden"));
     document.getElementById("modal")?.addEventListener("click", (e) => { if (e.target.id === "modal") document.getElementById("modal").classList.add("hidden"); });
   }
@@ -593,5 +574,3 @@ document.addEventListener("DOMContentLoaded", () => {
   Render.gardenList();
   Render.canvas();
 });
-
-

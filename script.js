@@ -13,7 +13,7 @@ const Utils = {
 const State = {
   draft: {
     emotionName: "", baseEmoji: "", color: "#A67C74", stickers: [],
-    eventText: "", qWhy: "", selfTalk: "", randomCard: "" // 🌟 移除了 choice, action, growth，換成 selfTalk
+    eventText: "", qWhy: "", selfTalk: "", randomCard: "" 
   },
   selectedStickerId: null,
 
@@ -28,7 +28,7 @@ const State = {
     "🛠️ 服務的行動：把明天要穿的衣服和包包提前準備好。",
     "👋 身體的接觸：洗一個舒服的熱水澡，感受水流放鬆肌肉。",
     "👋 身體的接觸：睡前用乳液輕輕按摩自己緊繃的小腿和肩膀。"
-    // (為了不佔用太多版面，我先放 10 個示意，你原本的 100 個可以直接覆蓋回來)
+    // (原本的 100 句可以直接蓋回來)
   ],
 
   getGarden() { return JSON.parse(localStorage.getItem("garden") || "[]"); },
@@ -48,7 +48,7 @@ const State = {
     this.draft.color = document.getElementById("colorPicker")?.value || "#A67C74";
     this.draft.eventText = document.getElementById("eventInput")?.value.trim() || "";
     this.draft.qWhy = document.getElementById("qWhy")?.value.trim() || "";
-    this.draft.selfTalk = document.getElementById("selfTalkInput")?.value.trim() || ""; // 🌟 收集「我想對自己說」
+    this.draft.selfTalk = document.getElementById("selfTalkInput")?.value.trim() || "";
   }
 };
 
@@ -169,8 +169,8 @@ const Render = {
   },
 
   page(pageId) {
-    // 🌟 已經沒有 pageMoveOn 了
-    ["pageHome", "pageCalm", "pageUnderstand", "pageUnderstand2"].forEach(id => {
+    // 🌟 把 pageMoveOn 加回來，總共五個面板在切換
+    ["pageHome", "pageCalm", "pageUnderstand", "pageUnderstand2", "pageMoveOn"].forEach(id => {
       document.getElementById(id)?.classList.add("hidden");
     });
     document.getElementById(pageId)?.classList.remove("hidden");
@@ -280,7 +280,7 @@ const Logic = {
     const modalCard = document.querySelector(".modalCard");
     if (modalCard) { modalCard.style.borderLeftColor = color; modalCard.style.borderLeftWidth = "8px"; modalCard.style.borderLeftStyle = "solid"; }
     
-    // 🌟 Modal 顯示內容更新，對應新欄位
+    // 🌟 Modal 顯示內容更新
     content.innerHTML = `
       <div style="color: ${color}; border-bottom: 2px solid ${color}; padding-bottom: 8px; font-size: 24px; font-weight: bold;">${item.emotionName || "(未命名)"}</div>
       <div style="color: #666; margin-bottom: 16px;">${item.date}</div>
@@ -289,9 +289,9 @@ const Logic = {
         <b style="color:${color}; font-size: 18px;">【事實與觸發】</b><br/>
         <b>🧾 紀錄事件：</b><br/>${item.eventText || "無"}<br/><br/>
         <b>🧠 觸發點：</b><br/>${item.qWhy || "無"}<br/><br/>
-        <b style="color:${color}; font-size: 18px;">【深對話與陪伴】</b><br/>
+        <b style="color:${color}; font-size: 18px;">【安頓與陪伴】</b><br/>
+        ${item.randomCard ? `<b>💡 抽到的靈感卡：</b><br/>${item.randomCard}<br/><br/>` : ""}
         <b>🌿 我想對自己說：</b><br/>${item.selfTalk || "無"}<br/><br/>
-        ${item.randomCard ? `<b>💡 抽到的靈感卡：</b><br/>${item.randomCard}` : ""}
       </div>
       <div style="margin-top:20px; text-align:right;"><button id="modalDeleteBtn" class="danger">刪除這筆紀錄</button></div>
     `;
@@ -301,23 +301,19 @@ const Logic = {
     modal.classList.remove("hidden");
   },
 
-  // 🌟 核心存檔功能：支援「階段性儲存」
+  // 🌟 階段性存檔核心
   finishAndSave(isPartialSave = false) {
     State.collectDraftFromDOM();
     
     if (isPartialSave) {
-      // 如果按的是「🌿 先記錄到這」
       if (!State.draft.emotionName && !State.draft.baseEmoji) {
-        // 什麼都還沒填，就直接回家
-        Render.page("pageHome");
+        Render.page("pageHome"); // 什麼都還沒寫就直接回家
         return;
       }
-      // 只要有填名字或表情，就存進花園
       State.saveGarden({ ...State.draft, id: Utils.uid(), date: new Date().toLocaleString("zh-TW") });
       alert("🍃 已為你保留目前的紀錄。先好好休息吧！");
       location.reload();
     } else {
-      // 如果按的是「完成，種入花園」
       if (!State.draft.emotionName) return alert("請先幫情緒取個名字喔！🌿"), Render.page("pageUnderstand");
       if (!State.draft.baseEmoji) return alert("請輸入一個主體 emoji！"), Render.page("pageUnderstand");
       
@@ -334,14 +330,12 @@ const Events = {
     document.getElementById("quickAddBtn")?.addEventListener("click", () => Render.page("pageUnderstand"));
     document.getElementById("logoTitle")?.addEventListener("click", () => Render.page("pageHome"));
     
-    // 🌟 在冷靜頁面，什麼都沒產生，單純回首頁
-    document.getElementById("backHomeFromCalm")?.addEventListener("click", () => {
-      Render.page("pageHome");
-    });
+    document.getElementById("backHomeFromCalm")?.addEventListener("click", () => Render.page("pageHome"));
 
-    // 🌟 在 1/2 跟 2/2 頁面的返回按鈕，綁定為「階段性存檔」
-    document.getElementById("backHomeFromUnderstand")?.addEventListener("click", () => Logic.finishAndSave(true));
-    document.getElementById("backHomeFromUnderstand2")?.addEventListener("click", () => Logic.finishAndSave(true));
+    // 🌟 在 1/2、2/2 和 第三階段 的「🌿 先記錄到這」都綁定階段性存檔
+    ["backHomeFromUnderstand", "backHomeFromUnderstand2", "backHomeFromMoveOn"].forEach(id => {
+      document.getElementById(id)?.addEventListener("click", () => Logic.finishAndSave(true));
+    });
 
     document.getElementById("backToUnderstand1Btn")?.addEventListener("click", () => Render.page("pageUnderstand"));
     document.getElementById("toUnderstandBtn")?.addEventListener("click", () => Render.page("pageUnderstand"));
@@ -351,6 +345,18 @@ const Events = {
       if (!State.draft.emotionName) return alert("請先為這份情緒取個專屬的名字喔！🌿");
       if (!State.draft.baseEmoji) return alert("請先輸入一個主體表符（例：🧸 / 🐈‍⬛ / ❤️‍🩹）。");
       Render.companions(); Render.page("pageUnderstand2");
+    });
+
+    // 🌟 從 Understand2 到 MoveOn
+    document.getElementById("toMoveOnBtn")?.addEventListener("click", () => {
+      State.collectDraftFromDOM();
+      Render.companions();
+      Render.page("pageMoveOn");
+    });
+    
+    // 🌟 從 MoveOn 回到 Understand2
+    document.getElementById("backToUnderstandBtn")?.addEventListener("click", () => {
+      Render.page("pageUnderstand2");
     });
     
     // 最終完成按鈕

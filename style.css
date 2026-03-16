@@ -446,26 +446,4 @@ input[type="color"], #colorPicker {
 #emotionNameInput {
   margin-bottom: 22px; /* 增加下方的間距 */
 }
-/* --- 📱 手機端精準拖曳優化 --- */
-
-/* 只針對貼紙本人設定，不影響頁面捲動 */
-.glow-palette .sticker, 
-.rect-canvas .sticker {
-  touch-action: none; /* 讓手機知道這顆貼紙要自己處理拖曳 */
-  -webkit-touch-callout: none; /* 防止 iPhone 彈出選單 */
-  -webkit-user-select: none;
-  user-select: none;
-  cursor: grab;
-}
-
-/* 抓取時的小回饋 */
-.sticker:active {
-  cursor: grabbing;
-  transform: translate(-50%, -50%) scale(1.1); /* 抓起時稍微放大 */
-}
-
-/* 畫布區域保持靜止，方便拼貼 */
-.canvas.rect-canvas {
-  touch-action: none; 
-}
 
